@@ -21,6 +21,14 @@ interface IRequest {
 server.post('/', async (req,res) =>{
     const {name, email}:IRequest = req.body
 
+    const userExist = await prisma.user.findFirst({
+        where:{
+            email
+        }
+    })
+
+    if(userExist) return res.status(404).json({error: true, message: "Usuário já existe" })
+
     const createUser = await prisma.user.create({
         data:{
             name,
