@@ -13,6 +13,25 @@ server.get("/", async (req,res) => {
     res.json(getAll)
 })
 
+interface IRequest {
+    name: string;
+    email: string;
+}
+
+server.post('/', async (req,res) =>{
+    const {name, email}:IRequest = req.body
+
+    const createUser = await prisma.user.create({
+        data:{
+            name,
+            email,
+        }
+    })
+
+    res.json(createUser)
+    
+})
+
 server.listen(port, () => {
     console.log(`O servidor está na esteira... - http://localhost:${port}`)
 })
