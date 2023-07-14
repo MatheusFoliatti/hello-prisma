@@ -1,9 +1,9 @@
-import { verify } from "jsonwebtoken";
-import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken"
+import { NextFunction, Request, Response, response } from "express";
 
-interface IPayLoad {
+interface IPayload {
     sub: string
-} 
+}
 
 export async function EnsureAuthenticateUser (
     request: Request,
@@ -16,19 +16,21 @@ export async function EnsureAuthenticateUser (
         message: "Token missing."
     })
 
-    const [_, token] =authHeader.split(" ")
+    const [_,token] =authHeader.split(" ")
 
     try {
         const { sub } = verify(
             token,
             "ChaveSecreta"
-        ) as IPayLoad
+        ) as IPayload
 
         request.userId = sub
 
         return next()
-        } 
-     catch {
-        return response.status(401).json({message: "Invalid Token"})
+        }
+    catch (error) {
+        return response.status(401).json({
+            message:"Invalid Token"
+        })
     }
 }

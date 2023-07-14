@@ -1,5 +1,6 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client'
+import { EnsureAuthenticateUser } from './middlewares/EnsureAuthenticateUser'
 
 const prisma = new PrismaClient()
 
@@ -15,7 +16,7 @@ server.use( (req, res, next) => {
     next()
 })
 
-server.get('/', async (req,res) => {
+server.get('/', EnsureAuthenticateUser, async (req,res) => {
     const getAll = await prisma.user.findMany()
 
     res.json(getAll)
@@ -80,26 +81,27 @@ server.put('/:id', async (req,res) => {
 
 })
 
+
 server.delete('/:id', async (req,res) => {
-    const { id } = req.params
- 
-     const userExist = await prisma.user.findFirst({
-     where:{
-         id
-     }
-    })
-    
-    if(!userExist) return res.status(400).json({error: true, message: "Usuário não existe"})
- 
-    const deleteUser = await prisma.user.delete({
-         where:{
+   const { id } = req.params
+
+    const userExist = await prisma.user.findFirst({
+    where:{
+        id
+    }
+   })
+   
+   if(!userExist) return res.status(400).json({error: true, message: "Usuário não existe"})
+
+   const deleteUser = await prisma.user.delete({
+        where:{
             id
-         }
-     })
-    
-     res.json(deleteUser)
- 
- })
+        },
+    })
+   
+    res.json(deleteUser)
+
+})
 
 
 
