@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { EnsureAuthenticateUser } from "../middlewares/EnsureAuthenticateUser";
+import { sign } from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 const userRoute = Router();
@@ -76,6 +77,33 @@ userRoute.post("/register", async (req, res) => {
   res.json(createUser);
 });
 
+userRoute.post("/authenticate", async (req, res) => {
+  const { email, password } = req.body;
+
+  const userExist = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!userExist)
+    return res
+      .status(404)
+      .json({ error: true, message: "Email ou Senha inválido" });
+
+  if (userExist.password !== password)
+    return res
+      .status(404)
+      .json({ error: true, message: "Email ou Senha inválido" });
+
+  const token = sign({ email: userExist.email }, "ChaveSecreta", {
+    subject: userExist.id,
+    expiresIn: "1d",
+  });
+
+  res.json(token)
+});
+
 //Atualizar informação do usuário
 userRoute.put("/:id", EnsureAuthenticateUser, async (req, res) => {
   const { name, email, password }: IRequestBody = req.body;
@@ -90,17 +118,17 @@ userRoute.put("/:id", EnsureAuthenticateUser, async (req, res) => {
   if (!userExist)
     return res.status(400).json({ error: true, message: "Usuário não existe" });
 
-  let newInfo:IRequestBody = {name:"", email:"", password:""}
+  let newInfo: IRequestBody = { name: "", email: "", password: "" };
 
-    name === undefined || name === userExist.name 
+  name === undefined || name === userExist.name
     ? (newInfo.name = userExist.name!)
     : (newInfo.name = name);
-    
-    email === undefined || email === userExist.email 
+
+  email === undefined || email === userExist.email
     ? (newInfo.email = userExist.email!)
     : (newInfo.email = email);
 
-    password === undefined || password === userExist.password 
+  password === undefined || password === userExist.password
     ? (newInfo.password = userExist.password!)
     : (newInfo.password = password);
 
@@ -111,14 +139,14 @@ userRoute.put("/:id", EnsureAuthenticateUser, async (req, res) => {
     data: {
       name: newInfo.name,
       email: newInfo.email,
-      password: newInfo.password
+      password: newInfo.password,
     },
   });
 
   res.json(updateUser);
 });
 
-//Deletar usuário 
+//Deletar usuário
 userRoute.delete("/:id", EnsureAuthenticateUser, async (req, res) => {
   const { id } = req.params;
 
@@ -139,3 +167,5 @@ userRoute.delete("/:id", EnsureAuthenticateUser, async (req, res) => {
 
   res.json(deleteUser);
 });
+
+export { userRoute };

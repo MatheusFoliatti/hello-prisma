@@ -3,41 +3,49 @@
     "colName": "Dev",
     "created": "2023-07-01T00:58:58.845Z",
     "sortNum": 10000,
-    "folders": [],
+    "folders": [
+        {
+            "_id": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
+            "name": "user",
+            "containerId": "",
+            "created": "2023-07-15T01:07:03.206Z",
+            "sortNum": 10000
+        }
+    ],
     "requests": [
         {
             "_id": "e9d83d56-f5a4-4713-88f3-df7fc103810c",
             "colId": "fdd39ba1-3674-4b7a-9bac-ff21a535b22b",
-            "containerId": "",
+            "containerId": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
             "name": "getAll",
-            "url": "{{urlBase}}/",
+            "url": "{{urlBase}}/user/getall",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-07-01T00:59:10.685Z",
-            "modified": "2023-07-08T01:24:27.609Z",
+            "modified": "2023-07-15T01:20:18.754Z",
             "headers": [],
             "params": [],
             "auth": {
                 "type": "bearer",
-                "bearer": "alskdlknslnaslknasld"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inphd2FydWRvQGdtYWlsLmNvbS5iciIsImlhdCI6MTY4OTM4Mzc2MywiZXhwIjoxNjg5NDcwMTYzLCJzdWIiOiIxNDUxMDU1ZS1hNTEwLTQyZDMtYmZhNC05ZGFlZWY2YmNiM2YifQ.Z2stE_MsNL5rhuuhx7lnLPws_1EC6YULkL-GZa7lSpg"
             },
             "tests": []
         },
         {
             "_id": "951651c4-2b37-450d-abfb-3f2e26785ea1",
             "colId": "fdd39ba1-3674-4b7a-9bac-ff21a535b22b",
-            "containerId": "",
+            "containerId": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
             "name": "createUser",
-            "url": "{{urlBase}}",
+            "url": "{{urlBase}}/user/register",
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-07-01T01:06:13.923Z",
-            "modified": "2023-07-01T01:07:07.157Z",
+            "modified": "2023-07-15T01:09:34.449Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\":\"Vitor\",\n  \"email\":\"vitor@fema.com.br\"\n}",
+                "raw": "{\n  \"name\":\"Dio\",\n  \"email\":\"zawarudo@gmail.com.br\",\n  \"password\":\"JotaroGod\"\n}",
                 "form": []
             },
             "tests": []
@@ -45,26 +53,30 @@
         {
             "_id": "d24c86c4-7aec-4155-9f67-89dc45e99a70",
             "colId": "fdd39ba1-3674-4b7a-9bac-ff21a535b22b",
-            "containerId": "",
+            "containerId": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
             "name": "updateUser",
-            "url": "{{urlBase}}/8a3054eb-4215-4222-8c39-71bc70cc1512",
+            "url": "{{urlBase}}/user/1451055e-a510-42d3-bfa4-9daeef6bcb3f",
             "method": "PUT",
             "sortNum": 30000,
             "created": "2023-07-07T23:43:45.538Z",
-            "modified": "2023-07-07T23:46:23.483Z",
+            "modified": "2023-07-15T01:22:47.487Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\":\"Batatinha123\",\n  \"email\":\"batatinhaFrita@fema.com.br\"\n}",
+                "raw": "{\n  \"email\":\"BONDEDOZAWARUDO@fema.com.br\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inphd2FydWRvQGdtYWlsLmNvbS5iciIsImlhdCI6MTY4OTM4Mzc2MywiZXhwIjoxNjg5NDcwMTYzLCJzdWIiOiIxNDUxMDU1ZS1hNTEwLTQyZDMtYmZhNC05ZGFlZWY2YmNiM2YifQ.Z2stE_MsNL5rhuuhx7lnLPws_1EC6YULkL-GZa7lSpg"
             },
             "tests": []
         },
         {
             "_id": "b4e88410-7449-4e53-9ebb-f9912d3b9678",
             "colId": "fdd39ba1-3674-4b7a-9bac-ff21a535b22b",
-            "containerId": "",
+            "containerId": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
             "name": "deleteUser",
             "url": "{{urlBase}}/e50822e0-d128-49e5-91fe-1fc9c4e68821",
             "method": "DELETE",
@@ -73,6 +85,25 @@
             "modified": "2023-07-08T00:53:30.378Z",
             "headers": [],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c04ab4d2-de0a-43e2-a2bb-bb13293d0421",
+            "colId": "fdd39ba1-3674-4b7a-9bac-ff21a535b22b",
+            "containerId": "54e305d7-d004-47c8-a3ca-6bd390c2c68e",
+            "name": "authenticateUser",
+            "url": "{{urlBase}}/user/authenticate",
+            "method": "POST",
+            "sortNum": 25000,
+            "created": "2023-07-15T01:15:17.050Z",
+            "modified": "2023-07-15T01:16:03.386Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"zawarudo@gmail.com.br\",\n  \"password\":\"JotaroGod\"\n}",
+                "form": []
+            },
             "tests": []
         }
     ]
